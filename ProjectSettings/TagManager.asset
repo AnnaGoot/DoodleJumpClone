@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Platform
   - BoostPlatform
+  - Coin
   layers:
   - Default
   - TransparentFX

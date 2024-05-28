@@ -32,11 +32,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        
-    }
-
     void FixedUpdate()
     {
         if (Application.platform == RuntimePlatform.Android)
@@ -74,36 +69,5 @@ public class PlayerController : MonoBehaviour
         }
         
         
-        
-        //foreach (ContactPoint2D point in collision.contacts)
-        //{
-        //    if (point.normal.y >= 0.5f)
-        //    {
-        //        if (collision.collider.CompareTag("BoostPlatform"))
-        //        {
-        //            jumpForce = boostJump;
-        //        }
-        //        else if (collision.collider.CompareTag("Platform"))
-        //        {
-        //            jumpForce = normalJump;
-        //        }
-        //        DoodleRB.velocity = Vector2.up * jumpForce;
-        //        break;
-        //    }
-        //}
-
-
-
-        //if (collision.collider.name == "DeadZone")
-        //{
-        //    if (gameOverUIController != null)
-        //    {
-        //        gameOverUIController.ShowGameOverScreen();
-        //    }
-        //    else
-        //    {
-        //        Debug.LogError("GameOverUIController script not found!");
-        //    }
-        //}
     }
 }

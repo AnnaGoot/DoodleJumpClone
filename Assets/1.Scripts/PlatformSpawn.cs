@@ -8,12 +8,17 @@ public class PlatformSpawn : MonoBehaviour
 
     public GameObject boostPlatformPrefab;
     public float boostPlatformChance = 0.1f;
+    public GameObject disappearingPlatformPrefab;
+    public float disappearingPlatformChance = 0.1f;
 
     public float platformSpacingY = 2.0f;
     public int initialPlatforms = 20;
     private float despawnYThreshold = -5f;
 
     private float nextPlatformCheck = 0.0f;
+
+    public GameObject coinPrefab;
+    public float coinSpawnChance = 0.3f;
 
     private void Start()
     {
@@ -53,9 +58,20 @@ public class PlatformSpawn : MonoBehaviour
         {
             prefabToSpawn = boostPlatformPrefab;
         }
+        //Instantiate(prefabToSpawn, position, Quaternion.identity);
 
+
+        if (Random.value < disappearingPlatformChance)
+        {
+            prefabToSpawn = disappearingPlatformPrefab;
+        }
         Instantiate(prefabToSpawn, position, Quaternion.identity);
-        //int platformIndex = Random.Range(0, platformPrefabs.Length);
-        //Instantiate(platformPrefabs[platformIndex], position, Quaternion.identity);
+
+        if (Random.value < coinSpawnChance)
+        {
+            Vector3 coinPosition = position + new Vector3(0, 0.5f, 0);
+            Instantiate(coinPrefab, coinPosition, Quaternion.identity);
+        }
     }
+
 }
