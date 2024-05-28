@@ -3,8 +3,7 @@ using UnityEngine.UI;
 using System.Threading.Tasks;
 using DG.Tweening;
 
-
-public class UIScreen : MonoBehaviour
+public abstract class UIScreen : MonoBehaviour
 {
     private Image[] allTargetGraphic;
     //private bool canAnimate = true;
