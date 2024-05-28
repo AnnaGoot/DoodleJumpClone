@@ -58,8 +58,6 @@ public class PlatformSpawn : MonoBehaviour
         {
             prefabToSpawn = boostPlatformPrefab;
         }
-        //Instantiate(prefabToSpawn, position, Quaternion.identity);
-
 
         if (Random.value < disappearingPlatformChance)
         {

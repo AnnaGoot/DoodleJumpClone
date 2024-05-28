@@ -15,9 +15,15 @@ public class PlayerController : MonoBehaviour
 
     public GameOverUIController gameOverUIController;
 
+    private float screenLeftLimit;
+    private float screenRightLimit;
+
     private void Start()
     {
         jumpForce = normalJump;
+
+        screenLeftLimit = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)).x;
+        screenRightLimit = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0)).x;
     }
 
     void Awake()
@@ -50,6 +56,22 @@ public class PlayerController : MonoBehaviour
         }
 
         DoodleRB.velocity = new Vector2(Input.acceleration.x * 10f, DoodleRB.velocity.y);
+
+        CheckScreenWrap();
+    }
+
+    void CheckScreenWrap()
+    {
+        Vector3 position = transform.position;
+        if (position.x < screenLeftLimit)
+        {
+            position.x = screenRightLimit;
+        }
+        else if (position.x > screenRightLimit)
+        {
+            position.x = screenLeftLimit;
+        }
+        transform.position = position;
 
     }
 
