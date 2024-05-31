@@ -23,8 +23,6 @@ public class PlayerController : MonoBehaviour
     private float screenLeftLimit;
     private float screenRightLimit;
 
-    private float despawnYThreshold = -10f;
-
     void Awake()
     {
         if (instance == null)
@@ -46,8 +44,6 @@ public class PlayerController : MonoBehaviour
         Vector3 screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
         screenLeftLimit = -screenBounds.x;
         screenRightLimit = screenBounds.x;
-        //screenLeftLimit = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)).x;
-        //screenRightLimit = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0)).x;
 
         currentJumpStartY = transform.position.y;
     }
