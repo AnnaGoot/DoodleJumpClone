@@ -19,13 +19,17 @@ public class DisappearingPlatform : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player") && playerToched)
         {
-            Invoke("Disappear", disapperDelay);
+            StartCoroutine(Disappear());
         }
     }
 
-    private void Disappear()
+    private IEnumerator Disappear()
     {
-        Destroy(gameObject);
-        playerToched = false;
+        yield return new WaitForSeconds(disapperDelay);
+        if (playerToched)
+        {
+            Destroy(gameObject);
+
+        }
     }
 }

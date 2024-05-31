@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class PlatformSpawn : MonoBehaviour
@@ -13,8 +15,8 @@ public class PlatformSpawn : MonoBehaviour
 
     public float platformSpacingY = 2.0f;
     public int initialPlatforms = 20;
-    private float despawnYThreshold = -5f;
 
+    private float despawnYThreshold = -5f;
     private float nextPlatformCheck = 0.0f;
 
     public GameObject coinPrefab;
@@ -34,42 +36,81 @@ public class PlatformSpawn : MonoBehaviour
 
     private void Update()
     {
-        if (PlayerController.instance.transform.position.y > nextPlatformCheck - (initialPlatforms * platformSpacingY / 2))
+        CheckAndSpawnPlatforms();
+        DespawnOffscreenPlatforms();
+    }
+
+    private void CheckAndSpawnPlatforms()
+    {
+        if (PlayerController.instance != null &&
+            PlayerController.instance.transform.position.y > nextPlatformCheck - (initialPlatforms * platformSpacingY / 2))
         {
-            SpawnPlatform(new Vector3(Random.Range(-1.7f, 1.7f), nextPlatformCheck, 0));
+            Vector3 spawnPosition = new Vector3(Random.Range(-1.7f, 1.7f), nextPlatformCheck, 0);
+            SpawnPlatform(spawnPosition);
             nextPlatformCheck += platformSpacingY;
         }
+    }
 
-        foreach (GameObject platform in GameObject.FindGameObjectsWithTag("Platform"))
+    private void DespawnOffscreenPlatforms()
+    {
+        if (PlayerController.instance != null)
         {
-            if (platform.transform.position.y < PlayerController.instance.transform.position.y + despawnYThreshold)
+            GameObject[] platforms = GameObject.FindGameObjectsWithTag("Platform");
+            float playerY = PlayerController.instance.transform.position.y;
+
+            foreach (GameObject platform in platforms)
             {
-                Destroy(platform);
+                if (platform.transform.position.y < playerY + despawnYThreshold)
+                {
+                    Destroy(platform);
+                }
+            }
+
+            foreach (GameObject coin in GameObject.FindGameObjectsWithTag("Coin"))
+            {
+                if (coin.transform.position.y < playerY + despawnYThreshold)
+                {
+                    Destroy(coin);
+                }
+            }
+
+            if (PlayerController.instance != null && PlayerController.instance.transform.position.y < despawnYThreshold)
+            {
+                PlayerController.instance.HandleGameOver();
             }
         }
 
     }
 
+
     void SpawnPlatform(Vector3 position)
     {
-        GameObject prefabToSpawn = platformPrefabs[Random.Range(0, platformPrefabs.Length)];
+        GameObject prefabToSpawn = ChoosePlatformPrefab();
+        Instantiate(prefabToSpawn, position, Quaternion.identity);
+        SpawnCoin(position);
+    }
 
+    private GameObject ChoosePlatformPrefab()
+    {
         if (Random.value < boostPlatformChance)
         {
-            prefabToSpawn = boostPlatformPrefab;
+            return boostPlatformPrefab;
         }
 
         if (Random.value < disappearingPlatformChance)
         {
-            prefabToSpawn = disappearingPlatformPrefab;
+            return disappearingPlatformPrefab;
         }
-        Instantiate(prefabToSpawn, position, Quaternion.identity);
+        return platformPrefabs[Random.Range(0, platformPrefabs.Length)];
+    }
 
+    private void SpawnCoin(Vector3 position)
+    {
         if (Random.value < coinSpawnChance)
         {
             Vector3 coinPosition = position + new Vector3(0, 0.5f, 0);
             Instantiate(coinPrefab, coinPosition, Quaternion.identity);
         }
-    }
 
+    }
 }

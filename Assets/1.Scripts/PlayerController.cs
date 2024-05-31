@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,18 +14,16 @@ public class PlayerController : MonoBehaviour
     public float boostJump = 20f;
     private float jumpForce;
 
+    public TMP_Text scoreText;
+    private float topScore = 0.0f;
+    private float currentJumpStartY;
+
     public GameOverUIController gameOverUIController;
 
     private float screenLeftLimit;
     private float screenRightLimit;
 
-    private void Start()
-    {
-        jumpForce = normalJump;
-
-        screenLeftLimit = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)).x;
-        screenRightLimit = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0)).x;
-    }
+    private float despawnYThreshold = -10f;
 
     void Awake()
     {
@@ -38,7 +37,34 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        jumpForce = normalJump;
+
+        DoodleRB = GetComponent<Rigidbody2D>();
+
+        Vector3 screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
+        screenLeftLimit = -screenBounds.x;
+        screenRightLimit = screenBounds.x;
+        //screenLeftLimit = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)).x;
+        //screenRightLimit = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0)).x;
+
+        currentJumpStartY = transform.position.y;
+    }
+
     void FixedUpdate()
+    {
+        HandleMovement();
+        CheckScreenWrap();
+
+        if (DoodleRB.velocity.y > 0 && transform.position.y > topScore)
+        {
+            topScore = transform.position.y;
+            scoreText.text = "Score: " + Mathf.Round(topScore).ToString();
+        }
+    }
+
+    private void HandleMovement()
     {
         if (Application.platform == RuntimePlatform.Android)
         {
@@ -56,9 +82,8 @@ public class PlayerController : MonoBehaviour
         }
 
         DoodleRB.velocity = new Vector2(Input.acceleration.x * 10f, DoodleRB.velocity.y);
-
-        CheckScreenWrap();
     }
+
 
     void CheckScreenWrap()
     {
@@ -75,21 +100,34 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    public void OnTriggerEnter2D(Collider2D other)
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        currentJumpStartY = transform.position.y;
+
+        if (collision.gameObject.name == "DeadZone")
+        {
+            HandleGameOver();
+        } 
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.name == "DeadZone")
         {
-            if (gameOverUIController != null)
-            {
-                gameOverUIController.ShowGameOverScreen();
-            }
-            else
-            {
-                Debug.LogError("GameOverUIController script not found!");
-            }
-            this.enabled = false;
+            HandleGameOver();
         }
-        
-        
+    }
+
+    public void HandleGameOver()
+    {
+        if (gameOverUIController != null)
+        {
+            gameOverUIController.ShowGameOverScreen();
+        }
+        else
+        {
+            Debug.LogError("GameOverUIController script not found!");
+        }
+        Destroy(gameObject);
     }
 }

@@ -9,9 +9,13 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        if (playerPosition.position.y > transform.position.y)
+        if (playerPosition != null)
         {
-            transform.position = new Vector3(transform.position.x, playerPosition.position.y, transform.position.z);
+            if (playerPosition.position.y > transform.position.y)
+            {
+                transform.position = new Vector3(transform.position.x, playerPosition.position.y, transform.position.z);
+            }
         }
+       
     }
 }
