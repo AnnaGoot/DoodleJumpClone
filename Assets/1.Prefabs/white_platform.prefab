@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3486998187406282581}
   - component: {fileID: 7658615636054676241}
   - component: {fileID: 1751842488791571917}
-  - component: {fileID: 9096069541864231411}
   - component: {fileID: 1318778780495508755}
   - component: {fileID: 3720059101100268544}
   m_Layer: 0
@@ -101,19 +100,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forceJump: 10
---- !u!114 &9096069541864231411
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2292943023299047970}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52506aec5b7f9564cb73fa62fe0b75fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  disapperDelay: 1.3
+  isBoostPlatform: 0
+  isDisappearingPlatform: 0
+  disappearDelay: 0.2
 --- !u!61 &1318778780495508755
 BoxCollider2D:
   m_ObjectHideFlags: 0

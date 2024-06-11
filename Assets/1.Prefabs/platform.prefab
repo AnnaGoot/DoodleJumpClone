@@ -173,6 +173,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forceJump: 10
+  isBoostPlatform: 0
+  isDisappearingPlatform: 0
+  disappearDelay: 0.2
 --- !u!251 &1592473488524652035
 PlatformEffector2D:
   m_ObjectHideFlags: 0

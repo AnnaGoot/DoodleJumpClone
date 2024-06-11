@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    public static PlayerController instance;
     float horizontal;
     public Rigidbody2D DoodleRB;
 
@@ -23,17 +22,6 @@ public class PlayerController : MonoBehaviour
     private float screenLeftLimit;
     private float screenRightLimit;
 
-    void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
 
     private void Start()
     {

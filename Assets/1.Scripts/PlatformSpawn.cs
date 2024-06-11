@@ -6,12 +6,12 @@ using UnityEngine;
 
 public class PlatformSpawn : MonoBehaviour
 {
-    public GameObject[] platformPrefabs;
+    public GameObject platformPrefab;
 
     public GameObject boostPlatformPrefab;
-    public float boostPlatformChance = 0.1f;
+    public float boostPlatformChance = 0.3f;
     public GameObject disappearingPlatformPrefab;
-    public float disappearingPlatformChance = 0.1f;
+    public float disappearingPlatformChance = 0.3f;
 
     public float platformSpacingY = 2.0f;
     public int initialPlatforms = 20;
@@ -20,7 +20,14 @@ public class PlatformSpawn : MonoBehaviour
     private float nextPlatformCheck = 0.0f;
 
     public GameObject coinPrefab;
-    public float coinSpawnChance = 0.3f;
+    public float coinSpawnChance = 0.5f;
+
+    private PlayerController playerController;
+
+    //public void Init(PlayerController controller)
+    //{
+    //    playerController = controller;
+    //}
 
     private void Start()
     {
@@ -32,18 +39,23 @@ public class PlatformSpawn : MonoBehaviour
             SpawnPlatform(spawnPosition);
         }
         nextPlatformCheck = initialY;
+
+        playerController = FindObjectOfType<PlayerController>();
     }
 
     private void Update()
     {
-        CheckAndSpawnPlatforms();
-        DespawnOffscreenPlatforms();
+        if (playerController != null)
+        {
+            CheckAndSpawnPlatforms();
+            DespawnOffscreenPlatforms();
+
+        }
     }
 
     private void CheckAndSpawnPlatforms()
     {
-        if (PlayerController.instance != null &&
-            PlayerController.instance.transform.position.y > nextPlatformCheck - (initialPlatforms * platformSpacingY / 2))
+        if (playerController.transform.position.y > nextPlatformCheck - (initialPlatforms * platformSpacingY / 2))
         {
             Vector3 spawnPosition = new Vector3(Random.Range(-1.7f, 1.7f), nextPlatformCheck, 0);
             SpawnPlatform(spawnPosition);
@@ -53,10 +65,8 @@ public class PlatformSpawn : MonoBehaviour
 
     private void DespawnOffscreenPlatforms()
     {
-        if (PlayerController.instance != null)
-        {
             GameObject[] platforms = GameObject.FindGameObjectsWithTag("Platform");
-            float playerY = PlayerController.instance.transform.position.y;
+            float playerY = playerController.transform.position.y;
 
             foreach (GameObject platform in platforms)
             {
@@ -74,34 +84,42 @@ public class PlatformSpawn : MonoBehaviour
                 }
             }
 
-            if (PlayerController.instance != null && PlayerController.instance.transform.position.y < despawnYThreshold)
+            if (playerController.transform.position.y < despawnYThreshold)
             {
-                PlayerController.instance.HandleGameOver();
+                playerController.HandleGameOver();
             }
-        }
-
     }
 
 
     void SpawnPlatform(Vector3 position)
     {
-        GameObject prefabToSpawn = ChoosePlatformPrefab();
+        GameObject prefabToSpawn = ChooosePlatformType();
         Instantiate(prefabToSpawn, position, Quaternion.identity);
+        //GameObject platformInstance = Instantiate(prefabToSpawn, position, Quaternion.identity);
+        //Platform platform = platformInstance.GetComponent<Platform>();
+        //if (platform != null)
+        //{
+        //    platform.Init(playerController);
+        //}
+
         SpawnCoin(position);
     }
 
-    private GameObject ChoosePlatformPrefab()
+    private GameObject ChooosePlatformType()
     {
-        if (Random.value < boostPlatformChance)
+        float randomValue = Random.value;
+        if (randomValue < boostPlatformChance)
         {
             return boostPlatformPrefab;
         }
-
-        if (Random.value < disappearingPlatformChance)
+        else if (randomValue < boostPlatformChance + disappearingPlatformChance)
         {
             return disappearingPlatformPrefab;
         }
-        return platformPrefabs[Random.Range(0, platformPrefabs.Length)];
+        else
+        {
+            return platformPrefab;
+        }
     }
 
     private void SpawnCoin(Vector3 position)

@@ -1385,8 +1385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a66bb40421e869a44a05065a5ef47a5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  platformPrefabs:
-  - {fileID: 7380288859094035825, guid: ad4d60bafa8ce2143badd2008271d59c, type: 3}
+  platformPrefab: {fileID: 7380288859094035825, guid: ad4d60bafa8ce2143badd2008271d59c, type: 3}
   boostPlatformPrefab: {fileID: 4135042082137137860, guid: 579144b4318203047a32a90c612199ed, type: 3}
   boostPlatformChance: 0.1
   disappearingPlatformPrefab: {fileID: 2292943023299047970, guid: 141bd405768581a409fdccd3a01c537f, type: 3}
@@ -1673,6 +1672,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1785260753}
   m_CullTransparentMesh: 1
+--- !u!1 &1792500837
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1792500839}
+  - component: {fileID: 1792500838}
+  m_Layer: 0
+  m_Name: BootStrapper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1792500838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1792500837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b65588f4c4613af43a7c5e75aa81c122, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 7415393272517683279, guid: 366648494b608834ea0c66fde389ebf7, type: 3}
+  platformSpawn: {fileID: 1461137468}
+--- !u!4 &1792500839
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1792500837}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.978183, y: 18.878561, z: -0.24908686}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1801753444
 GameObject:
   m_ObjectHideFlags: 0
@@ -1874,6 +1919,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5201292236146665873, guid: ad4d60bafa8ce2143badd2008271d59c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7380288859094035825, guid: ad4d60bafa8ce2143badd2008271d59c, type: 3}
       propertyPath: m_Name
       value: platform
@@ -1892,3 +1941,4 @@ SceneRoots:
   - {fileID: 1461137469}
   - {fileID: 2024269043}
   - {fileID: 589882411}
+  - {fileID: 1792500839}
