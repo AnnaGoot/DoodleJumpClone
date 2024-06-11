@@ -24,6 +24,8 @@ public class Platform : MonoBehaviour
     {
         playerController = FindObjectOfType<PlayerController>();
         
+
+
         spriteRenderer = GetComponent<SpriteRenderer>();
         collider2D = GetComponent<Collider2D>();
         if (playerController == null)

@@ -40,6 +40,8 @@ public class PlatformSpawn : MonoBehaviour
         }
         nextPlatformCheck = initialY;
 
+
+
         playerController = FindObjectOfType<PlayerController>();
     }
 
@@ -95,8 +97,7 @@ public class PlatformSpawn : MonoBehaviour
     {
         GameObject prefabToSpawn = ChooosePlatformType();
         Instantiate(prefabToSpawn, position, Quaternion.identity);
-        //GameObject platformInstance = Instantiate(prefabToSpawn, position, Quaternion.identity);
-        //Platform platform = platformInstance.GetComponent<Platform>();
+
         //if (platform != null)
         //{
         //    platform.Init(playerController);
