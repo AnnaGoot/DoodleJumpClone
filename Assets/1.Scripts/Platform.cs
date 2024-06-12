@@ -10,21 +10,15 @@ public class Platform : MonoBehaviour
     [SerializeField] private float disappearDelay = 0.2f;
 
     private PlayerController playerController;
+
     private SpriteRenderer spriteRenderer;
     private Collider2D collider2D;
     private bool playerToched = false;
     private bool playerJumpedOff = false;
 
-    //public void Init(PlayerController controller)
-    //{
-    //    playerController = controller;
-    //}
-
     private void Start()
     {
-        playerController = FindObjectOfType<PlayerController>();
-        
-
+        //playerController = FindObjectOfType<PlayerController>();
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         collider2D = GetComponent<Collider2D>();
@@ -33,6 +27,12 @@ public class Platform : MonoBehaviour
             Debug.LogError("PlayerController not in the scene");
         }
     }
+
+    public void SetPlayer(PlayerController player)
+    {
+        playerController = player;
+    }
+
     public void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.relativeVelocity.y <= 0 && collision.collider.CompareTag("Player"))

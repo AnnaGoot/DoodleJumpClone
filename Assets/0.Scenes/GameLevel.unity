@@ -1688,7 +1688,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1792500838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1701,8 +1701,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b65588f4c4613af43a7c5e75aa81c122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 7415393272517683279, guid: 366648494b608834ea0c66fde389ebf7, type: 3}
-  platformSpawn: {fileID: 1461137468}
+  playerPrefab: {fileID: 4896441400316564364, guid: 366648494b608834ea0c66fde389ebf7, type: 3}
+  platformSpawnGameObject: {fileID: 1461137468}
 --- !u!4 &1792500839
 Transform:
   m_ObjectHideFlags: 0

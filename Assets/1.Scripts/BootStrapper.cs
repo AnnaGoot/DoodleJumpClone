@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class BootStrapper : MonoBehaviour
 {
-    [SerializeField] private GameObject playerPrefab;
-    [SerializeField] private PlatformSpawn platformSpawn;
+    [SerializeField] private PlayerController playerPrefab;
+    [SerializeField] private PlatformSpawn platformSpawnGameObject;
 
     private void Awake()
     {
@@ -14,9 +14,10 @@ public class BootStrapper : MonoBehaviour
 
     private void InitGame()
     {
-        GameObject playerInstance = Instantiate(playerPrefab);
-        PlayerController playerController = playerInstance.GetComponent<PlayerController>();
+        var playerInstance = Instantiate(playerPrefab);
+        var platformSpawner = new GameObject("Spawner").AddComponent<PlatformSpawn>();
 
-        //platformSpawn.Init(playerController);
+        platformSpawner.SetPlayer(playerInstance);
+
     }
 }

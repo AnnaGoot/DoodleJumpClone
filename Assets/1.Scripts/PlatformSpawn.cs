@@ -24,11 +24,6 @@ public class PlatformSpawn : MonoBehaviour
 
     private PlayerController playerController;
 
-    //public void Init(PlayerController controller)
-    //{
-    //    playerController = controller;
-    //}
-
     private void Start()
     {
         float initialY = 0;
@@ -40,9 +35,12 @@ public class PlatformSpawn : MonoBehaviour
         }
         nextPlatformCheck = initialY;
 
+        //playerController = FindObjectOfType<PlayerController>();
+    }
 
-
-        playerController = FindObjectOfType<PlayerController>();
+    public void SetPlayer(PlayerController player)
+    {
+        playerController = player;
     }
 
     private void Update()
